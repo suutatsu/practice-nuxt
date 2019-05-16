@@ -19,12 +19,19 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: '~/components/loading.vue' ,
 
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    // Node.js モジュールを直接ロードする (ここでは SASS ファイル)
+    'bulma',
+    // プロジェクト内の CSS ファイル
+    '@/assets/css/main.css',
+    // プロジェクト内の SCSS ファイル
+    '@/assets/css/main.scss'
+  ],
 
   /*
    ** Plugins to load before mounting the App
@@ -44,6 +51,16 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
   },
+
+  server: {
+    port: 8000, // デフォルト: 3000
+    host: '0.0.0.0', // デフォルト: localhost,
+  },
+
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
+
 
   /*
    ** Build configuration
