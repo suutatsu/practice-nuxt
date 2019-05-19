@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="loading-page" v-if="loading">
+  <div v-if="loading" class="loading-page">
     <p>Loading...</p>
   </div>
 </template>
@@ -10,10 +10,10 @@ export default {
     loading: false
   }),
   methods: {
-    start () {
+    start() {
       this.loading = true
     },
-    finish () {
+    finish() {
       this.loading = false
     }
   }

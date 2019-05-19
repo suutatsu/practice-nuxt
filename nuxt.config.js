@@ -16,27 +16,32 @@ module.exports = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
-  /*
-   ** Customize the progress-bar color
-   */
-  loading: '~/components/loading.vue' ,
-
-  /*
-   ** Global CSS
-   */
   css: [
     // Node.js モジュールを直接ロードする (ここでは SASS ファイル)
     'bulma',
-    // プロジェクト内の CSS ファイル
-    '@/assets/css/main.css',
     // プロジェクト内の SCSS ファイル
-    '@/assets/css/main.scss'
+    '~/assets/main.scss',
+      // プロジェクト内の CSS ファイル
+    '~/assets/main.css',
   ],
+
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: '~/components/loading.vue',
 
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [],
+
+
+  router: {
+    middleware: 'stats'
+  },
+
+  watchQuery: true,
+
 
   /*
    ** Nuxt.js modules
@@ -54,13 +59,12 @@ module.exports = {
 
   server: {
     port: 8000, // デフォルト: 3000
-    host: '0.0.0.0', // デフォルト: localhost,
+    host: '0.0.0.0' // デフォルト: localhost,
   },
 
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000'
   },
-
 
   /*
    ** Build configuration
