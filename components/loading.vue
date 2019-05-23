@@ -9,6 +9,15 @@ export default {
   data: () => ({
     loading: false
   }),
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+
+      setTimeout(() => {
+        this.finish()
+      }, 2000)
+    })
+  },
   methods: {
     start() {
       this.loading = true
@@ -32,5 +41,6 @@ export default {
   padding-top: 200px;
   font-size: 30px;
   font-family: sans-serif;
+  z-index: 9999;
 }
 </style>

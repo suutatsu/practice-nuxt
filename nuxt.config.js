@@ -21,8 +21,8 @@ module.exports = {
     'bulma',
     // プロジェクト内の SCSS ファイル
     '~/assets/main.scss',
-      // プロジェクト内の CSS ファイル
-    '~/assets/main.css',
+    // プロジェクト内の CSS ファイル
+    '~/assets/main.css'
   ],
 
   /*
@@ -35,13 +35,11 @@ module.exports = {
    */
   plugins: [],
 
-
   router: {
     middleware: 'stats'
   },
 
   watchQuery: true,
-
 
   /*
    ** Nuxt.js modules
