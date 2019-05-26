@@ -2,23 +2,18 @@
   <section class="container">
     <div>
       <logo />
-      <h1 class="title">
-        practice-nuxt
-      </h1>
+      <h1 class="title">practice-nuxt</h1>
       <nuxt-link to="/about">About page</nuxt-link>
-      <h2 class="subtitle">
-        My splendiferous Nuxt.js project
-      </h2>
+      <h2 class="subtitle">My splendiferous Nuxt.js project</h2>
       <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green"
-          >Documentation</a
+        <nuxt-link
+          v-for="post in posts"
+          :key="post.id"
+          :to="{ name: 'post-id', params: { id: post.id } }"
+          class="button--gray"
         >
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-          >GitHub</a
-        >
+          {{ post.title }}
+        </nuxt-link>
       </div>
     </div>
   </section>
@@ -29,6 +24,22 @@ import Logo from '~/components/Logo.vue'
 export default {
   components: {
     Logo
+  },
+  head() {
+    return {
+      title: 'Home Page 🍕',
+      meta: [
+        { name: 'twitter:title', content: 'Nuxt Fundamentals by Vue school' },
+        { name: 'twitter:description', content: 'Nuxt + Vue = 🍕' },
+        { name: 'twitter:image', content: 'https://i.imgur.com/UYP2umJ.png' },
+        { name: 'twitter:card', content: 'sammary_large_image' }
+      ]
+    }
+  },
+  computed: {
+    posts() {
+      return this.$store.state.posts.all
+    }
   }
 }
 </script>

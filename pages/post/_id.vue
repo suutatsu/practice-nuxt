@@ -4,6 +4,16 @@
       <h1 class="title">{{ post.title }}</h1>
       <p>{{ post.content }}</p>
     </article>
+    <aside>
+      <h3>post you might enjoy</h3>
+      <ul>
+        <li v-for="related in relatedPosts" :key="related.id">
+          <nuxt-link :to="{ name: 'post-id', params: { id: related.id } }">{{
+            related.title
+          }}</nuxt-link>
+        </li>
+      </ul>
+    </aside>
   </div>
 </template>
 
@@ -11,29 +21,26 @@
 export default {
   data() {
     return {
-      id: this.$route.params.id,
-      posts: [
-        {
-          id: 'balut',
-          title: 'What is Balut?',
-          content: 'サンプルサンプルサンプル'
-        },
-        {
-          id: 'whereisit',
-          title: 'Where is the sign in balut?',
-          content: 'サンプルサンプル'
-        },
-        {
-          id: 'how',
-          title: 'How can I fix this problem?',
-          content: 'サンプルサンプルサンプル'
-        }
+      id: this.$route.params.id
+    }
+  },
+  head() {
+    return {
+      title: this.post.title,
+      meta: [
+        { name: 'twitter:title', content: this.post.title },
+        { name: 'twitter:description', content: this.post.content },
+        { name: 'twitter:image', content: 'https://i.imgur.com/UYP2umJ.png' },
+        { name: 'twitter:card', content: 'sammary_large_image' }
       ]
     }
   },
   computed: {
     post() {
-      return this.posts.find(post => post.id === this.id)
+      return this.$store.state.posts.all.find(post => post.id === this.id)
+    },
+    relatedPosts() {
+      return this.$store.state.posts.all.filter(post => post.id !== this.id)
     }
   }
 }

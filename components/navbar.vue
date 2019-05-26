@@ -1,7 +1,9 @@
 <template>
   <nav class="nav">
     <div class="logo">
-      <a href="#" class="logo">NUXT Fandamentails</a>
+      <nuxt-link :to="{ name: 'index' }" class="logo text-lg"
+        >NUXT Fandamentails</nuxt-link
+      >
       <span class="subheader">A VUE school course</span>
     </div>
   </nav>

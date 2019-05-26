@@ -1,12 +1,3 @@
-export const state = () => ({
-  counter: 0
-})
+export const state = () => {}
 
-export const mutations = {
-  increment(state) {
-    state.counter++
-  },
-  decrement(state) {
-    state.counter--
-  }
-}
+export const getter = {}
