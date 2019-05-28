@@ -26,12 +26,17 @@ module.exports = {
   ],
 
   /*
+   ** Customize the progress-bar color
+   */
+  loading: '~/components/loading.vue',
+
+  /*
    ** Plugins to load before mounting the App
    */
   plugins: [],
 
   router: {
-    middleware: 'check-auth'
+    middleware: 'stats'
   },
 
   watchQuery: true,
@@ -55,12 +60,8 @@ module.exports = {
     host: '0.0.0.0' // デフォルト: localhost,
   },
 
-  /*
-   ** Environement variables
-   */
   env: {
-    AUTH0_CLIENT_ID: '',
-    AUTH0_CLIENT_DOMAIN: ''
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
   },
 
   /*

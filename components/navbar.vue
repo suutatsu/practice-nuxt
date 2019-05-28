@@ -1,46 +1,51 @@
 <template>
-  <div class="header">
-    <nuxt-link to="/" exact>Home</nuxt-link>
-    <nuxt-link to="/about">About</nuxt-link>
-    <nuxt-link v-if="isAuthenticated" to="/secret">Top Secret</nuxt-link>
-    <nuxt-link v-if="!isAuthenticated" to="/auth/sign-in">Sign In</nuxt-link>
-    <nuxt-link v-else to="/auth/sign-off">Sign Off</nuxt-link>
-  </div>
+  <nav class="nav">
+    <div class="logo">
+      <nuxt-link :to="{ name: 'index' }" class="logo text-lg"
+        >NUXT Fandamentails</nuxt-link
+      >
+      <span class="subheader">A VUE school course</span>
+    </div>
+  </nav>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-export default {
-  computed: mapGetters(['isAuthenticated'])
-}
+export default {}
 </script>
 
 <style scoped>
-.header {
+nav {
   display: flex;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 70px;
+  letter-spacing: 0.5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
-a {
-  margin-right: 20px;
-  font-size: 14px;
-  color: #999;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  transition: color 0.25s;
-  font-weight: 400;
-  line-height: normal;
+
+.nav .logo .subheader {
+  opacity: 0.5;
+  font-size: 0.9rem;
+  color: #000;
 }
-a:hover {
-  color: #333;
+
+.nav .nav-content {
+  font-size: 1rem;
 }
-a.nuxt-link-active {
-  color: #333;
-  border-top: 1px solid #333;
-  border-bottom: 1px solid #333;
-  font-weight: 600;
+
+.nav-content ul {
+  display: flex;
+  list-style: none;
+}
+
+.nav-content ul li {
+  padding: 2px 10px;
+}
+
+.nav-content ul li:not(:first-of-type) {
+  border-left: 1px solid #000;
 }
 </style>
