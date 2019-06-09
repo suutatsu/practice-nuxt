@@ -17,7 +17,6 @@ module.exports = {
   },
 
   css: [
-    // Node.js モジュールを直接ロードする (ここでは SASS ファイル)
     'bulma',
     // プロジェクト内の SCSS ファイル
     '~/assets/main.scss',
@@ -46,7 +45,8 @@ module.exports = {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'bootstrap-vue/nuxt'
   ],
   /*
    ** Axios module configuration

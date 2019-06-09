@@ -11,3 +11,6 @@
 .about-enter, .about-leave-active {
   opacity: 0;
 }
+.modal {
+  z-index: 1072;
+}

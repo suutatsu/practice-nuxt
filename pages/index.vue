@@ -27,8 +27,9 @@ export default {
 
 <style scoped>
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  padding: 100px 0 0;
+  width: 700px;
+  margin: 0 auto;
 }
 </style>

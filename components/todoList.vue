@@ -7,19 +7,11 @@
       <span>削除</span>
     </div>
     <div>
-      <div class="all-delete-button-container">
-        <button
-          type="button"
-          class="el-button all-delete-button el-button--danger"
-          @click="allRemove"
-        >
-          <span>タスクをすべて削除する</span>
-        </button>
-      </div>
       <div class="head-label">
         <ul id="sortable" class="ui-sortable">
           <li v-for="(todo, index) in todos" :key="index">
             <span>{{ todo.text }}</span>
+            <span>{{ todo.day }}</span>
             <input
               type="checkbox"
               :checked="todo.done"
@@ -28,6 +20,15 @@
             <button @click="remove(index)">削除</button>
           </li>
         </ul>
+      </div>
+      <div class="all-delete-button-container">
+        <button
+          type="button"
+          class="el-button all-delete-button el-button--danger"
+          @click="allRemove"
+        >
+          <span>タスクをすべて削除する</span>
+        </button>
       </div>
     </div>
   </div>
@@ -43,6 +44,9 @@ export default {
     }
   },
   methods: {
+    modalOpen(index) {
+      this.$refs[`modal- ${index}`].show()
+    },
     ...mapMutations({
       toggle: 'todos/toggle',
       remove: 'todos/remove',
@@ -54,7 +58,6 @@ export default {
 
 <style scoped>
 .container {
-  width: 960px;
-  margin: 0 auto;
+  margin-top: 50px;
 }
 </style>
