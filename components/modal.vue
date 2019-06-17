@@ -54,7 +54,7 @@
 }
 
 .modal-leave-active {
-  transition: opacity 0.6s ease 0.4s;
+  transition: opacity 0.2s ease 0.2s;
 }
 
 .modal-enter,

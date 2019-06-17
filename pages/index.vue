@@ -4,18 +4,15 @@
       <h1 class="title">Practis-Todo</h1>
     </div>
     <todo />
-    <todoList />
   </section>
 </template>
 
 <script>
 import todo from '~/components/todo'
-import todoList from '~/components/todoList'
 
 export default {
   components: {
-    todo,
-    todoList
+    todo
   },
   head() {
     return {

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="wrapper">
     <h2>現在取り組んでいるタスク：</h2>
-    <span v-if="tasks">{{ tasks }}</span>
+    <span>{{ task }}</span>
     <button @click="modalOpen = true">追加・変更</button>
     <modal v-if="modalOpen" @close="closeModal">
       <p>現在取り組んでいるタスクを入力してください</p>
@@ -16,23 +16,31 @@
       </form>
     </modal>
     <h2>タスクを入力してください</h2>
-    <input
-      v-model="todo"
-      class="input"
-      type="text"
-      placeholder="新しいタスク"
-      required
-    />
-    <input type="submit" value="追加する" />
+    <form @submit.prevent="onSubmit">
+      <input
+        v-model="todo"
+        class="input"
+        type="text"
+        placeholder="新しいタスク"
+        required
+      />
+      <input type="submit" value="追加する" />
+    </form>
+    <todoList />
+    <report />
   </div>
 </template>
 
 <script>
 import modal from '~/components/modal'
+import todoList from '~/components/todoList'
+import report from '~/components/report'
 
 export default {
   components: {
-    modal
+    modal,
+    todoList,
+    report
   },
   data: () => ({
     todo: null,
@@ -40,11 +48,6 @@ export default {
     task: null,
     modalOpen: false
   }),
-  computed: {
-    tasks() {
-      return this.$store.state.todos.task
-    }
-  },
   methods: {
     onSubmit() {
       const productTodo = {

@@ -17,8 +17,14 @@
               :checked="todo.done"
               @change="toggle(todo)"
             />
-            <button @click="remove(index)">削除</button>
+            <button @click="openModal(index)">削除</button>
           </li>
+          <modal v-if="modalOpen" @close="closeModal">
+            <p>本当に削除しますか？</p>
+            <button @click="removeTodo">
+              削除
+            </button>
+          </modal>
         </ul>
       </div>
       <div class="all-delete-button-container">
@@ -36,22 +42,38 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import modal from '~/components/modal'
 
 export default {
+  components: {
+    modal
+  },
+  data: () => ({
+    modalOpen: false,
+    todoIndex: 0
+  }),
   computed: {
     todos() {
       return this.$store.state.todos.list
     }
   },
   methods: {
-    modalOpen(index) {
-      this.$refs[`modal- ${index}`].show()
-    },
     ...mapMutations({
       toggle: 'todos/toggle',
       remove: 'todos/remove',
       allRemove: 'todos/allRemove'
-    })
+    }),
+    openModal(index) {
+      this.modalOpen = true
+      this.todoIndex = index
+    },
+    closeModal() {
+      this.modalOpen = false
+    },
+    removeTodo() {
+      this.remove(this.todoIndex)
+      this.modalOpen = false
+    }
   }
 }
 </script>
