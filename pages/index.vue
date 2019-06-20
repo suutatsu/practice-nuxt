@@ -7,13 +7,19 @@
   </section>
 </template>
 
-<script>
-import todo from '~/components/todo'
+<script lang="ts">
+import {
+  Component,
+  Vue
+} from "nuxt-property-decorator"
 
-export default {
+@Component({
   components: {
-    todo
+    todo: () => import('@/components/todo')
   },
+})
+
+export default class extends Vue  {
   head() {
     return {
       title: 'practis-todo'
