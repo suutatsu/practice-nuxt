@@ -21,7 +21,7 @@
           </li>
           <modal v-if="modalOpen" @close="closeModal">
             <p>本当に削除しますか？</p>
-            <button @click="removeTodo">
+            <button @click="remove(index)">
               削除
             </button>
           </modal>
@@ -40,40 +40,38 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import { mapMutations } from 'vuex'
 import modal from '~/components/modal'
 
-export default {
+@Component({
   components: {
     modal
   },
-  data: () => ({
-    modalOpen: false,
-    todoIndex: 0
-  }),
-  computed: {
-    todos() {
-      return this.$store.state.todos.list
-    }
-  },
   methods: {
     ...mapMutations({
-      toggle: 'todos/toggle',
-      remove: 'todos/remove',
-      allRemove: 'todos/allRemove'
-    }),
-    openModal(index) {
-      this.modalOpen = true
-      this.todoIndex = index
-    },
-    closeModal() {
-      this.modalOpen = false
-    },
-    removeTodo() {
-      this.remove(this.todoIndex)
-      this.modalOpen = false
-    }
+    toggle: 'todos/toggle',
+    remove: 'todos/remove',
+    allRemove: 'todos/allRemove'
+    })
+  }
+})
+export default class extends Vue {
+  modalOpen: boolean = false
+  todoIndex: number = 0
+
+  private get todos(): Object[] {
+    return this.$store.state.todos.list
+  }
+
+  openModal(index: number): void {
+    this.modalOpen = true
+    this.todoIndex = index
+  }
+
+  closeModal(): void {
+    this.modalOpen = false
   }
 }
 </script>

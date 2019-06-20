@@ -1,5 +1,5 @@
 import NuxtConfiguration from '@nuxt/config'
-import pkg from './package.json';
+import pkg from './package.json'
 
 const config: NuxtConfiguration = {
   mode: 'universal',
@@ -67,6 +67,7 @@ const config: NuxtConfiguration = {
       'xoxp-543573578821-544796620710-654136370371-ccb15ea7e3c02de7408f0a8f16d82cfc'
   },
 
+  extensions: ['ts', 'js'],
   /*
    ** Build configuration
    */
@@ -74,8 +75,7 @@ const config: NuxtConfiguration = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx)
-    {
+    extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         if (!config.module) return
@@ -90,4 +90,4 @@ const config: NuxtConfiguration = {
   }
 }
 
-export default config;
+export default config

@@ -32,52 +32,47 @@
 </template>
 
 <script lang="ts">
-import {
-  Component,
-  Vue
-} from "nuxt-property-decorator"
+import { Component, Vue } from 'nuxt-property-decorator'
+import modal from '~/components/modal'
+import todoList from '~/components/todoList'
+import report from '~/components/report'
 
 @Component({
   components: {
-    modal: () => import('~/components/modal'),
-    todoList: () => import('~/components/todoList'),
-    report: () => import('~/components/report')
-  },
-
+    modal,
+    todoList,
+    report
+  }
 })
-
 export default class extends Vue {
   todo: String = ''
   day: String = ''
   task: String = ''
-  modalOpen:Boolean = false
+  modalOpen: Boolean = false
 
+  addTodo(todo) {
+    this.$store.commit('todos/add', todo)
+  }
 
-    onSubmit() {
-      const productTodo = {
-        todo: this.todo,
-        day: this.day,
-        done: false
-      }
-      this.todo = ''
-      this.addTodo(productTodo)
+  addTask() {
+    this.$store.commit('todos/addTask', this.task)
+    this.modalOpen = false
+  }
+
+  closeModal() {
+    this.modalOpen = false
+  }
+
+  onSubmit() {
+    const productTodo = {
+      todo: this.todo,
+      day: this.day,
+      done: false
     }
-
-    addTodo(todo) {
-      this.$store.commit('todos/add', todo)
-    }
-
-    addTask() {
-      this.$store.commit('todos/addTask', this.task)
-      this.modalOpen = false
-    }
-
-    closeModal() {
-      this.modalOpen = false
-    }
+    this.todo = ''
+    this.addTodo(productTodo)
+  }
 }
-
-
 </script>
 
 <style scoped>

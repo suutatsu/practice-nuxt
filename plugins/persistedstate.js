@@ -4,7 +4,7 @@ export default ({ store, isHMR }) => {
   if (isHMR) return
 
   if (process.client) {
-    window.onNuxtReady(nuxt => {
+    window.onNuxtReady(() => {
       createPersistedState({
         paths: ['todos']
       })(store)

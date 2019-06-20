@@ -35,89 +35,106 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import modal from '~/components/modal'
-import { WebClient } from '@slack/web-api'
+import { WebClient, WebAPICallResult } from '@slack/web-api'
 const token = process.env.SLACK_TOKEN
 const web = new WebClient(token)
 
-export default {
+interface ChatPostMessageResult extends WebAPICallResult {
+  channel: string
+  attachments: [
+    {
+      color: string
+      text: string
+      pretext: string
+    }
+  ]
+}
+
+@Component({
   components: {
     modal
-  },
-  data: () => ({
-    modalOpen: false,
-    contributor: null,
-    channel: '01-bot_test',
-    text: null
-  }),
-  computed: {
-    task() {
-      return this.$store.state.todos.task
-    },
-    todos() {
-      return this.$store.state.todos.list
+  }
+})
+export default class extends Vue {
+  modalOpen: boolean = false
+  contributor: string = ''
+  channel: string = '01-bot_test'
+  text: string = ''
+
+  private get task(): string {
+    return this.$store.state.todos.task
+  }
+  private get todos(): Object[] {
+    return this.$store.state.todos.list
+  }
+
+  openModal(): void {
+    this.modalOpen = true
+    this.text = `${this.formatDate()}\n【現在取り組み中の課題】\n${
+      this.task ? this.task : ''
+    }\n\n【本日完了したタスク】\n${this.doneList()}\n【明日以降のタスク】\n${this.todoList()}\n【感想】`
+  }
+
+  closeModal(): void {
+    this.modalOpen = false
+  }
+
+  done(): void {
+    const reportDetail = {
+      contributor: this.contributor ? this.contributor : '誰かさん',
+      channel: this.channel,
+      text: this.text
     }
-  },
-  methods: {
-    openModal(index) {
-      this.modalOpen = true
-      this.text = `${this.formatDate()}\n【現在取り組み中の課題】\n${
-        this.task ? this.task : ''
-      }\n\n【本日完了したタスク】\n${this.doneList()}\n【明日以降のタスク】\n${this.todoList()}\n【感想】`
-    },
-    closeModal() {
-      this.modalOpen = false
-    },
-    done() {
-      const reportDetail = {
-        contributor: this.contributor ? this.contributor : '誰かさん',
-        channel: this.channel,
-        text: this.text
+    this.sendRequest(reportDetail)
+  }
+
+  async sendRequest(reportDetail: object): Promise<void> {
+    (await web.chat.postMessage({
+      text: 'こちら',
+      channel: 'C012345',
+      attachments: [
+        {
+          color: '#36a64f',
+          pretext: `${reportDetail.contributor}の投稿`,
+          text: reportDetail.text
+        }
+      ]
+    })) as ChatPostMessageResult
+    this.modalOpen = false
+  }
+
+  formatDate(): string {
+    const date = new Date()
+    const y = date.getFullYear()
+    const m = date.getMonth() + 1
+    const d = date.getDate()
+    const day = '日月火水木金土'.charAt(date.getDay())
+    return `${y}年${m}月${d}日 (${day})`
+  }
+
+  doneList(): string {
+    let text = ''
+
+    this.todos.map(value => {
+      if (value.done) {
+        text += `- ${value.text}\n`
       }
-      this.sendRequest(reportDetail)
-    },
-    async sendRequest(reportDetail) {
-      await web.chat.postMessage({
-        channel: reportDetail.channel,
-        attachments: [
-          {
-            color: '#36a64f',
-            pretext: `${reportDetail.contributor}の投稿`,
-            text: reportDetail.text
-          }
-        ]
-      })
-      this.modalOpen = null
-    },
-    formatDate() {
-      const date = new Date()
-      const y = date.getFullYear()
-      const m = date.getMonth() + 1
-      const d = date.getDate()
-      const day = '日月火水木金土'.charAt(date.getDay())
-      return `${y}年${m}月${d}日 (${day})`
-    },
-    doneList() {
-      let text = ''
+    })
+    return text
+  }
 
-      this.todos.forEach(value => {
-        if (value.done) {
-          text += `- ${value.text}\n`
-        }
-      })
-      return text
-    },
-    todoList() {
-      let text = ''
+  todoList(): string {
+    let text = ''
 
-      this.todos.forEach(value => {
-        if (!value.done) {
-          text += `- ${value.text}\n`
-        }
-      })
-      return text
-    }
+    this.todos.map(value => {
+      if (!value.done) {
+        text += `- ${value.text}\n`
+      }
+    })
+    return text
   }
 }
 </script>
