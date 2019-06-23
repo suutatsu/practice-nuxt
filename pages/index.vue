@@ -9,19 +9,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import todo from '~/components/todo'
 
 @Component({
   components: {
-    todo: () => import('~/components/todo')
+    todo
   }
 })
-export default class extends Vue {
-  head() {
-    return {
-      title: 'practis-todo'
-    }
-  }
-}
+export default class extends Vue {}
 </script>
 
 <style scoped>

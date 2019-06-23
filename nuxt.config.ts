@@ -1,7 +1,7 @@
 import NuxtConfiguration from '@nuxt/config'
 import pkg from './package.json'
 
-const config: NuxtConfiguration = {
+const nuxtConfig: NuxtConfiguration = {
   mode: 'universal',
 
   /*
@@ -62,7 +62,7 @@ const config: NuxtConfiguration = {
   },
 
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    baseUrl: process.env.BASE_URL || 'http://localhost:8000',
     SLACK_TOKEN:
       'xoxp-543573578821-544796620710-654136370371-ccb15ea7e3c02de7408f0a8f16d82cfc'
   },
@@ -90,4 +90,4 @@ const config: NuxtConfiguration = {
   }
 }
 
-export default config
+export default nuxtConfig

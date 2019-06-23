@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="wrapper">
     <button @click="openModal">日報を書く</button>
     <modal v-if="modalOpen" @close="closeModal">
@@ -27,8 +27,7 @@
           rows="10"
           cols="70"
           class="input-area"
-        >
-        </textarea>
+        ></textarea>
         <input type="submit" value="投稿する" />
       </form>
     </modal>
@@ -38,19 +37,20 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import modal from '~/components/modal'
-import { WebClient, WebAPICallResult } from '@slack/web-api'
+import { WebClient } from '@slack/web-api'
 const token = process.env.SLACK_TOKEN
 const web = new WebClient(token)
 
-interface ChatPostMessageResult extends WebAPICallResult {
+interface REPORT {
+  contributor: string
   channel: string
-  attachments: [
-    {
-      color: string
-      text: string
-      pretext: string
-    }
-  ]
+  text: string
+}
+
+interface TODO {
+  text: string
+  day: string
+  done: boolean
 }
 
 @Component({
@@ -67,7 +67,7 @@ export default class extends Vue {
   private get task(): string {
     return this.$store.state.todos.task
   }
-  private get todos(): Object[] {
+  private get todos(): TODO[] {
     return this.$store.state.todos.list
   }
 
@@ -83,7 +83,7 @@ export default class extends Vue {
   }
 
   done(): void {
-    const reportDetail = {
+    const reportDetail: REPORT = {
       contributor: this.contributor ? this.contributor : '誰かさん',
       channel: this.channel,
       text: this.text
@@ -91,8 +91,8 @@ export default class extends Vue {
     this.sendRequest(reportDetail)
   }
 
-  async sendRequest(reportDetail: object): Promise<void> {
-    (await web.chat.postMessage({
+  async sendRequest(reportDetail: REPORT): Promise<void> {
+    await web.chat.postMessage({
       text: 'こちら',
       channel: 'C012345',
       attachments: [
@@ -102,7 +102,7 @@ export default class extends Vue {
           text: reportDetail.text
         }
       ]
-    })) as ChatPostMessageResult
+    })
     this.modalOpen = false
   }
 
@@ -116,7 +116,7 @@ export default class extends Vue {
   }
 
   doneList(): string {
-    let text = ''
+    let text: string = ''
 
     this.todos.map(value => {
       if (value.done) {
