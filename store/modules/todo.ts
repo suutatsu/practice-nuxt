@@ -11,8 +11,8 @@ export interface ITodoState {
 @Module({ dynamic: true, store, name: 'todo', namespaced: true })
 class Todos extends VuexModule implements ITodoState {
   // state
-  @State list: Todo[] = []
-  @State task: string = ''
+  list: Todo[] = []
+  task: string = ''
 
   // mutation
   @Mutation

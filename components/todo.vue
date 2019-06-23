@@ -52,20 +52,20 @@ export default class extends Vue {
   task: string = ''
   modalOpen: boolean = false
 
-  addTodo(todo): void {
+  private addTodo(todo): void {
     todoModule.ADD_TODO(todo)
   }
 
-  addTask(): void {
+  private addTask(): void {
     todoModule.ADD_TASK(this.task)
     this.modalOpen = false
   }
 
-  closeModal(): void {
+  private closeModal(): void {
     this.modalOpen = false
   }
 
-  onSubmit(): void {
+  private onSubmit(): void {
     const productTodo: Todo = {
       text: this.todo,
       day: this.day,

@@ -67,18 +67,18 @@ export default class extends Vue {
     return todoModule.list
   }
 
-  openModal(): void {
+  private openModal(): void {
     this.modalOpen = true
     this.text = `${this.formatDate()}\n【現在取り組み中の課題】\n${
       this.task ? this.task : ''
     }\n\n【本日完了したタスク】\n${this.doneList()}\n【明日以降のタスク】\n${this.todoList()}\n【感想】`
   }
 
-  closeModal(): void {
+  private closeModal(): void {
     this.modalOpen = false
   }
 
-  done(): void {
+  private done(): void {
     const reportDetail: REPORT = {
       contributor: this.contributor ? this.contributor : '誰かさん',
       channel: this.channel,
@@ -87,7 +87,7 @@ export default class extends Vue {
     this.sendRequest(reportDetail)
   }
 
-  async sendRequest(reportDetail: REPORT): Promise<void> {
+  private async sendRequest(reportDetail: REPORT): Promise<void> {
     await web.chat.postMessage({
       text: 'こちら',
       channel: 'C012345',
@@ -102,7 +102,7 @@ export default class extends Vue {
     this.modalOpen = false
   }
 
-  formatDate(): string {
+  private formatDate(): string {
     const date: Date = new Date()
     const y: number = date.getFullYear()
     const m: number = date.getMonth() + 1
@@ -111,7 +111,7 @@ export default class extends Vue {
     return `${y}年${m}月${d}日 (${day})`
   }
 
-  doneList(): string {
+  private doneList(): string {
     let text: string = ''
 
     this.todos.map(
@@ -124,7 +124,7 @@ export default class extends Vue {
     return text
   }
 
-  todoList(): string {
+  private todoList(): string {
     let text: string = ''
 
     this.todos.map(
