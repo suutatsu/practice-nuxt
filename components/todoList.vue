@@ -10,7 +10,7 @@
       <div class="head-label">
         <ul id="sortable" class="ui-sortable">
           <li v-for="(todo, index) in todos" :key="index">
-            <span>{{ todo.todo }}</span>
+            <span>{{ todo.text }}</span>
             <span>{{ todo.day }}</span>
             <input
               type="checkbox"
@@ -42,45 +42,42 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { mapMutations } from 'vuex'
-import modal from '~/components/modal'
-
-interface Todo {
-  text: string;
-  day: string;
-  done: boolean;
-}
-
-interface Todos {
-  list: Todo[]
-}
+import modal from '~/components/modal.vue'
+import { todoModule } from '~/store/modules/todo'
+import { Todo } from '~/types'
 
 @Component({
   components: {
     modal
-  },
-  methods: {
-    ...mapMutations({
-      toggle: 'todos/toggle',
-      remove: 'todos/remove',
-      allRemove: 'todos/allRemove'
-    })
   }
 })
 export default class extends Vue {
   modalOpen: boolean = false
   todoIndex: number = 0
 
-  private get todos(): Todos {
-    return this.$store.state.todos.list
+  private get todos(): Todo[] {
+    return todoModule.list
   }
 
-  openModal(index: number): void {
+  private toggle(todo: Todo): void {
+    todoModule.TOGGLE(todo)
+  }
+
+  private remove(index: number): void {
+    todoModule.REMOVE(index)
+    this.modalOpen = false
+  }
+
+  private allRemove(): void {
+    todoModule.ALL_REMOVE()
+  }
+
+  private openModal(index: number): void {
     this.modalOpen = true
     this.todoIndex = index
   }
 
-  closeModal(): void {
+  public closeModal(): void {
     this.modalOpen = false
   }
 }

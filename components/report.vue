@@ -36,8 +36,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import modal from '~/components/modal'
+import modal from '~/components/modal.vue'
 import { WebClient } from '@slack/web-api'
+import { todoModule } from '~/store/modules/todo'
+import { Todo } from '~/types'
 const token = process.env.SLACK_TOKEN
 const web = new WebClient(token)
 
@@ -45,12 +47,6 @@ interface REPORT {
   contributor: string
   channel: string
   text: string
-}
-
-interface TODO {
-  text: string
-  day: string
-  done: boolean
 }
 
 @Component({
@@ -65,10 +61,10 @@ export default class extends Vue {
   text: string = ''
 
   private get task(): string {
-    return this.$store.state.todos.task
+    return todoModule.task
   }
-  private get todos(): TODO[] {
-    return this.$store.state.todos.list
+  private get todos(): Todo[] {
+    return todoModule.list
   }
 
   openModal(): void {
@@ -107,33 +103,37 @@ export default class extends Vue {
   }
 
   formatDate(): string {
-    const date = new Date()
-    const y = date.getFullYear()
-    const m = date.getMonth() + 1
-    const d = date.getDate()
-    const day = '日月火水木金土'.charAt(date.getDay())
+    const date: Date = new Date()
+    const y: number = date.getFullYear()
+    const m: number = date.getMonth() + 1
+    const d: number = date.getDate()
+    const day: number = '日月火水木金土'.charAt(date.getDay())
     return `${y}年${m}月${d}日 (${day})`
   }
 
   doneList(): string {
     let text: string = ''
 
-    this.todos.map(value => {
-      if (value.done) {
-        text += `- ${value.text}\n`
+    this.todos.map(
+      (value): void => {
+        if (value.done) {
+          text += `- ${value.text}\n`
+        }
       }
-    })
+    )
     return text
   }
 
   todoList(): string {
-    let text = ''
+    let text: string = ''
 
-    this.todos.map(value => {
-      if (!value.done) {
-        text += `- ${value.text}\n`
+    this.todos.map(
+      (value): void => {
+        if (!value.done) {
+          text += `- ${value.text}\n`
+        }
       }
-    })
+    )
     return text
   }
 }

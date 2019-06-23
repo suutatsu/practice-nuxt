@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import todo from '~/components/todo'
+import todo from '~/components/todo.vue'
 
 @Component({
   components: {

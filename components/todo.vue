@@ -33,9 +33,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import modal from '~/components/modal'
-import todoList from '~/components/todoList'
-import report from '~/components/report'
+import modal from '~/components/modal.vue'
+import todoList from '~/components/todoList.vue'
+import report from '~/components/report.vue'
+import { todoModule } from '~/store/modules/todo'
+import { Todo } from '~/types'
 
 @Component({
   components: {
@@ -45,17 +47,17 @@ import report from '~/components/report'
   }
 })
 export default class extends Vue {
-  todo: String = ''
-  day: String = ''
-  task: String = ''
-  modalOpen: Boolean = false
+  todo: string = ''
+  day: string = ''
+  task: string = ''
+  modalOpen: boolean = false
 
   addTodo(todo): void {
-    this.$store.commit('todos/addTodo', todo)
+    todoModule.ADD_TODO(todo)
   }
 
   addTask(): void {
-    this.$store.commit('todos/addTask', this.task)
+    todoModule.ADD_TASK(this.task)
     this.modalOpen = false
   }
 
@@ -64,8 +66,8 @@ export default class extends Vue {
   }
 
   onSubmit(): void {
-    const productTodo = {
-      todo: this.todo,
+    const productTodo: Todo = {
+      text: this.todo,
       day: this.day,
       done: false
     }
