@@ -16,6 +16,33 @@
       </form>
     </modal>
     <h2>タスクを入力してください</h2>
+    <span>
+      <Datetime
+        v-model="day"
+        :format="'YYYY-MM-DD'"
+        :disabled-hours="[
+          '00',
+          '01',
+          '02',
+          '03',
+          '04',
+          '05',
+          '06',
+          '07',
+          '08',
+          '17',
+          '18',
+          '19',
+          '20',
+          '21',
+          '22',
+          '23'
+        ]"
+        :overlay="true"
+        :only-date="true"
+        :first-day-of-week="1"
+      ></Datetime>
+    </span>
     <form @submit.prevent="onSubmit">
       <input
         v-model="todo"
@@ -33,6 +60,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import Datetime from 'vue-ctk-date-time-picker'
+import '@/node_modules/vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css'
 import modal from '~/components/modal.vue'
 import todoList from '~/components/todoList.vue'
 import report from '~/components/report.vue'
@@ -43,7 +72,8 @@ import { Todo } from '~/types'
   components: {
     modal,
     todoList,
-    report
+    report,
+    Datetime
   }
 })
 export default class extends Vue {
@@ -72,6 +102,7 @@ export default class extends Vue {
       done: false
     }
     this.todo = ''
+    this.day = ''
     this.addTodo(productTodo)
   }
 }

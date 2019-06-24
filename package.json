@@ -26,6 +26,8 @@
     "nuxt": "^2.8.1",
     "nuxt-property-decorator": "^2.3.0",
     "ts-node": "^8.3.0",
+    "vue-ctk-date-time-picker": "^2.1.1",
+    "vue-no-ssr": "^1.1.1",
     "vuex-class": "^0.3.2",
     "vuex-module-decorators": "^0.9.9",
     "vuex-persistedstate": "^2.5.4"
