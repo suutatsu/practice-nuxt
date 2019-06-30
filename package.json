@@ -20,15 +20,15 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --ext .js src --fix",
+      "eslint --ext .js . --fix --ignore-path .gitignore",
       "git add"
     ],
     "*.vue": [
-      "eslint --ext .vue src --fix",
+      "eslint --ext .vue . --fix",
       "git add"
     ],
     "*.ts": [
-      "eslint --ext .vue src --fix",
+      "eslint --ext .vue . --fix",
       "git add"
     ]
   },
