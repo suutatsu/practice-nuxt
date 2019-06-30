@@ -37,7 +37,8 @@ const nuxtConfig: NuxtConfiguration = {
     {
       src: '~plugins/persistedstate.js',
       ssr: false
-    }
+    },
+    { src: '~/plugins/vee-validate' }
   ],
 
   router: {
