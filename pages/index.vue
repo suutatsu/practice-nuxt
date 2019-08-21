@@ -3,20 +3,33 @@
     <div>
       <h1 class="title">Practis-Todo</h1>
     </div>
-    <todo />
+    <PieChart
+      :chart-source="lectureAllStatistics"
+      :colors="['#009A4C', '#7CD971', '#D14B36']"
+      :title="$t('domain.lectures.label.lecturesAll')"
+      :width="180"
+    />
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import todo from '~/components/todo.vue'
+import PieChart from '~/components/pieChart.vue'
 
 @Component({
   components: {
-    todo
+    PieChart
   }
 })
-export default class extends Vue {}
+export default class extends Vue {
+  get lectureAllStatistics(): { [s: string]: number } {
+    return {
+      ["20","15","10"]: number,
+      2: number,
+      10: number
+    }
+  }
+}
 </script>
 
 <style scoped>
