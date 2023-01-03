@@ -27,7 +27,7 @@
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "lodash": "^4.17.15",
-    "nuxt": "^2.8.1",
+    "nuxt": "^2.15.8",
     "nuxt-property-decorator": "^2.3.0",
     "ts-node": "^8.3.0",
     "vue-chartjs": "^3.4.2",
